@@ -121,7 +121,8 @@ function render() {
 function show(result, expectedBytes, actualBytes, names, title) {
   report = result; filter = result.entries.some(entry => entry.status !== 'matched') ? 'issues' : 'all'; page = 0;
   for (const [id,key] of Object.entries({expected:'expected_net',actual:'actual_net',delta:'delta',under:'underpayment',over:'overpayment'})) {
-    $(id).textContent = E.formatMoney(report.totals[key]);
+    // Перенос между группами разрядов; валюта остаётся рядом с последней группой.
+    $(id).textContent = E.formatMoney(report.totals[key]).replace(/\u00a0/g,' ').replace(/ ₽$/,'\u00a0₽');
   }
   $('operation-count').textContent = report.entries.length + ' операций';
   const issues = report.counts.mismatch + report.counts.missing + report.counts.unexpected;
