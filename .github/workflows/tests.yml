@@ -13,5 +13,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node test_browser_engine.js
+        env:
+          PYTHON_EXECUTABLE: python
       - run: python -m unittest -v test_reconcile
       - run: python reconcile.py examples/expected.csv examples/actual.csv --out-dir generated

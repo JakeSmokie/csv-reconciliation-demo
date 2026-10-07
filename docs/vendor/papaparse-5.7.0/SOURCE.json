@@ -1,0 +1,24 @@
+{
+  "package": "papaparse",
+  "version": "5.7.0",
+  "license": "MIT",
+  "tarball": "https://registry.npmjs.org/papaparse/-/papaparse-5.7.0.tgz",
+  "integrity": "sha512-qBGxg/7Q3Kl9Wfhrz2Z74UnvnHTXLNG6jmKJFeBvP2+y4lV7So+7SR62+Zd47JvdrCkX+nDcnr0ObPzek/+6RA==",
+  "files": [
+    {
+      "name": "LICENSE",
+      "sha256": "99aa68e4b42758b09828a46515f70369e5463458ab7a990189f641af2b8d9b4e",
+      "bytes": 1079
+    },
+    {
+      "name": "package.json",
+      "sha256": "9277b27ee67eb8314909560b6cca5a7850d044618a5fa62c6bf67781f90aa218",
+      "bytes": 1398
+    },
+    {
+      "name": "papaparse.min.js",
+      "sha256": "4d5d2d6e3282b66aafaa5e6de8ca3ae06f8d3440111ae99c6a30f6c00cfac33e",
+      "bytes": 18874
+    }
+  ]
+}
