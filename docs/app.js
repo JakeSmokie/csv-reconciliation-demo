@@ -4,10 +4,14 @@ const E = window.ReconciliationEngine;
 const scenarios = window.DEMO_SCENARIOS;
 const $ = id => document.getElementById(id);
 let report = null, filter = 'all', page = 0, epoch = 0, sourceButton = null;
+const filterChoice = $('filter-choice');
 const PAGE_SIZE = 100;
 const urls = new Map();
 const labels = {matched:'Совпало', mismatch:'Суммы расходятся', missing:'Нет выплаты', unexpected:'Нет ожидания'};
 const encoder = new TextEncoder();
+function displayMoney(value) {
+  return E.formatMoney(value).replace(/\u00a0/g,' ').replace(/ ₽$/,'\u00a0₽');
+}
 function downloadable(id, content, type, name) {
   const element = $(id);
   if (!element) return;
@@ -88,18 +92,32 @@ function render() {
   const rows = document.createDocumentFragment();
   for (const entry of visible) {
     const tr = document.createElement('tr');
-    for (const value of [entry.id,labels[entry.status],E.formatMoney(entry.expected_net),E.formatMoney(entry.actual_net),E.formatMoney(entry.delta)]) {
+    tr.setAttribute('role','row');
+    for (const value of [entry.id,labels[entry.status],displayMoney(entry.expected_net),displayMoney(entry.actual_net),displayMoney(entry.delta)]) {
+      const column = tr.children.length;
       const td = document.createElement('td');
+      td.setAttribute('role','cell');
       td.textContent = value;
-      if (tr.children.length === 1) {
+      if (column === 1) {
         const badge = document.createElement('span');
         badge.className = 'status ' + entry.status;
         badge.textContent = value;
         td.replaceChildren(badge);
       }
+      if (column >= 2) {
+        const label = document.createElement('span');
+        label.className = 'cell-label';
+        label.setAttribute('aria-hidden','true');
+        label.textContent = ['Ожидается','Выплачено','Разница'][column-2];
+        const amount = document.createElement('span');
+        amount.className = 'cell-money';
+        amount.textContent = value;
+        td.replaceChildren(label,amount);
+      }
       tr.append(td);
     }
     const td = document.createElement('td');
+    td.setAttribute('role','cell');
     const button = document.createElement('button');
     button.className = 'row-source';
     button.textContent = 'Исходные строки';
@@ -122,12 +140,19 @@ function show(result, expectedBytes, actualBytes, names, title) {
   report = result; filter = result.entries.some(entry => entry.status !== 'matched') ? 'issues' : 'all'; page = 0;
   for (const [id,key] of Object.entries({expected:'expected_net',actual:'actual_net',delta:'delta',under:'underpayment',over:'overpayment'})) {
     // Перенос между группами разрядов; валюта остаётся рядом с последней группой.
-    $(id).textContent = E.formatMoney(report.totals[key]).replace(/\u00a0/g,' ').replace(/ ₽$/,'\u00a0₽');
+    const amount = displayMoney(report.totals[key]);
+    $(id).textContent = amount;
+    const metric = $(id).closest('.metric');
+    if (metric) {
+      $(id).classList.toggle('long-amount',amount.length > 16);
+      metric.classList.toggle('has-long-amount',amount.length > 16);
+    }
   }
   $('operation-count').textContent = report.entries.length + ' операций';
   const issues = report.counts.mismatch + report.counts.missing + report.counts.unexpected;
   $('input-status').textContent = `${title}. Проверено ${report.entries.length} операций, требуют внимания: ${issues}.`;
   for (const button of document.querySelectorAll('[data-filter]')) button.setAttribute('aria-pressed',String(button.dataset.filter===filter));
+  if (filterChoice) filterChoice.value = filter;
   downloadable('download-report',JSON.stringify(report,null,2)+'\n','application/json;charset=utf-8','reconciliation-report.json');
   downloadable('download-csv',E.toCSV(report),'text/csv;charset=utf-8','reconciliation-report.csv');
   downloadable('download-expected',expectedBytes,'text/csv;charset=utf-8',names.expected);
@@ -182,12 +207,15 @@ $('run-reconciliation').onclick = async () => {
     $('input-error').hidden = false; $('input-status').textContent = 'Сверка остановлена.';
   }
 };
-for (const button of document.querySelectorAll('[data-filter]')) button.onclick = () => {
+function chooseFilter(value) {
   if (!report) return;
-  filter = button.dataset.filter; page = 0;
-  for (const other of document.querySelectorAll('[data-filter]')) other.setAttribute('aria-pressed',String(other===button));
+  filter = value; page = 0;
+  for (const button of document.querySelectorAll('[data-filter]')) button.setAttribute('aria-pressed',String(button.dataset.filter===filter));
+  if (filterChoice) filterChoice.value = filter;
   render();
-};
+}
+for (const button of document.querySelectorAll('[data-filter]')) button.onclick = () => chooseFilter(button.dataset.filter);
+if (filterChoice) filterChoice.onchange = () => chooseFilter(filterChoice.value);
 $('close-source').onclick = () => {
   $('source-panel').hidden = true;
   if (sourceButton) {sourceButton.setAttribute('aria-expanded','false');sourceButton.focus();}

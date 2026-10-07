@@ -60,13 +60,14 @@ T001,900.00</pre></div></div><p>UTF-8, разделитель — запятая
         </section>
         <mdui-card variant="filled" class="report" aria-labelledby="report-title">
           <div class="report-heading"><div><h2 id="report-title">Операции</h2><p>Проверьте все строки или оставьте только расхождения.</p></div><div class="download-actions"><mdui-button variant="tonal" id="download-report" href="report.json" download="report.json">Скачать JSON <span aria-hidden="true">↓</span></mdui-button><mdui-button variant="tonal" id="download-csv" href="#" download="report.csv">Скачать CSV <span aria-hidden="true">↓</span></mdui-button></div></div>
+          <div class="field mobile-filter"><label for="filter-choice">Показать</label><select id="filter-choice"><option value="all">Все строки</option><option value="issues">Только проблемы</option><option value="missing">Нет выплаты</option><option value="unexpected">Неожиданная выплата</option></select></div>
           <div class="filters" role="group" aria-label="Фильтр строк">
             <mdui-button variant="tonal" data-filter="all" aria-pressed="true">Все строки</mdui-button>
             <mdui-button variant="tonal" data-filter="issues" aria-pressed="false">Только проблемы</mdui-button>
             <mdui-button variant="tonal" data-filter="missing" aria-pressed="false">Нет выплаты</mdui-button>
             <mdui-button variant="tonal" data-filter="unexpected" aria-pressed="false">Неожиданная выплата</mdui-button>
           </div>
-          <div class="table-scroll" tabindex="0" role="region" aria-label="Таблица результатов сверки"><table><thead><tr><th scope="col">Операция</th><th scope="col">Результат</th><th scope="col">Ожидается</th><th scope="col">Выплачено</th><th scope="col">Разница</th><th scope="col">Проверка</th></tr></thead><tbody id="rows"></tbody></table></div>
+          <div class="table-scroll" tabindex="0" role="region" aria-label="Таблица результатов сверки"><table role="table"><thead role="rowgroup"><tr role="row"><th scope="col" role="columnheader">Операция</th><th scope="col" role="columnheader">Результат</th><th scope="col" role="columnheader">Ожидается</th><th scope="col" role="columnheader">Выплачено</th><th scope="col" role="columnheader">Разница</th><th scope="col" role="columnheader">Проверка</th></tr></thead><tbody id="rows" role="rowgroup"></tbody></table></div>
           <div class="table-footer"><p id="count" aria-live="polite"></p><span>Каждая сумма связана с исходными строками.</span></div>
           <div id="source-panel" class="source-panel" hidden tabindex="-1" role="region" aria-labelledby="source-title"><div class="source-heading"><h3 id="source-title"></h3><mdui-button variant="text" id="close-source">Закрыть</mdui-button></div><pre id="source-values"></pre></div>
         </mdui-card>
