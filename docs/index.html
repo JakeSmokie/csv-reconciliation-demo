@@ -1,24 +1,25 @@
 <!doctype html>
-<html lang="ru" class="mdui-theme-dark">
+<html lang="ru" class="mdui-theme-light" data-theme="light">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#0b1326">
+  <meta name="theme-color" content="#f5f5f7">
   <meta name="description" content="Сверка двух CSV: точные суммы, понятные расхождения и исходные строки. Проект Ивана с проверяемыми примерами.">
   <title>Сверка выгрузок · Иван</title>
+  <script src="theme.js"></script>
   <link rel="stylesheet" href="vendor/mdui-2.1.5/mdui.css">
   <link rel="stylesheet" href="style.css">
   <script src="vendor/mdui-2.1.5/mdui.global.js"></script>
-  <script>mdui.setColorScheme('#397bd3');</script>
+  <script>mdui.setColorScheme('#0071e3');</script>
 </head>
 <body>
   <a class="skip-link" href="#workbench-title">Перейти к сверке</a>
   <header class="app-header glass">
     <a class="brand" href="#" aria-label="Иван — сверка выгрузок"><span class="avatar" aria-hidden="true">И</span><span><strong>Иван</strong><span class="brand-caption">Python и данные</span></span></a>
-    <div class="header-actions"><span class="project-label">Открытый проект</span><mdui-button variant="text" href="https://github.com/JakeSmokie/csv-reconciliation-demo">Код на GitHub <span aria-hidden="true">↗</span></mdui-button></div>
+    <div class="header-actions"><label class="theme-control" for="theme-choice"><span>Тема</span><select id="theme-choice"><option value="system">Системная</option><option value="light">Светлая</option><option value="dark">Тёмная</option></select></label><span id="theme-status" class="sr-only" aria-live="polite"></span><mdui-button variant="text" href="https://github.com/JakeSmokie/csv-reconciliation-demo">Код на GitHub <span aria-hidden="true">↗</span></mdui-button></div>
   </header>
   <div class="app-layout">
-    <nav class="side-nav glass" aria-label="Разделы проекта">
+    <nav class="side-nav" aria-label="Разделы проекта">
       <p class="nav-title">Сверка выгрузок</p>
       <a class="nav-item current" href="#workbench-title" aria-current="page">Сверить файлы</a>
       <a class="nav-item" href="#report-title">Посмотреть результат</a>
@@ -56,7 +57,7 @@ T001,900.00</pre></div></div><p>UTF-8, разделитель — запятая
         </section>
         <mdui-card variant="filled" class="report" aria-labelledby="report-title">
           <div class="report-heading"><div><h2 id="report-title">Операции</h2><p>Проверьте все строки или оставьте только расхождения.</p></div><div class="download-actions"><mdui-button variant="outlined" id="download-report" href="report.json" download="report.json">Скачать JSON <span aria-hidden="true">↓</span></mdui-button><mdui-button variant="outlined" id="download-csv" href="#" download="report.csv">Скачать CSV <span aria-hidden="true">↓</span></mdui-button></div></div>
-          <div class="filters glass" role="group" aria-label="Фильтр строк">
+          <div class="filters" role="group" aria-label="Фильтр строк">
             <mdui-button variant="tonal" data-filter="all" aria-pressed="true">Все строки</mdui-button>
             <mdui-button variant="tonal" data-filter="issues" aria-pressed="false">Только проблемы</mdui-button>
             <mdui-button variant="tonal" data-filter="missing" aria-pressed="false">Нет выплаты</mdui-button>
