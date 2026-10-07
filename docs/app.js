@@ -149,9 +149,9 @@ function show(result, expectedBytes, actualBytes, names, title) {
       metric.classList.toggle('has-long-amount',amount.length > 16);
     }
   }
-  $('operation-count').textContent = report.entries.length + ' операций';
+  $('operation-count').textContent = 'Операций: ' + report.entries.length;
   const issues = report.counts.mismatch + report.counts.missing + report.counts.unexpected;
-  $('input-status').textContent = `${title}. Проверено ${report.entries.length} операций, требуют внимания: ${issues}.`;
+  $('input-status').textContent = `${title}. Проверено операций: ${report.entries.length}; требуют внимания: ${issues}.`;
   for (const button of document.querySelectorAll('[data-filter]')) button.setAttribute('aria-pressed',String(button.dataset.filter===filter));
   if (filterChoice) filterChoice.value = filter;
   downloadable('download-report',JSON.stringify(report,null,2)+'\n','application/json;charset=utf-8','reconciliation-report.json');
