@@ -119,14 +119,14 @@ function render() {
   $('source-panel').hidden = true; sourceButton = null;
 }
 function show(result, expectedBytes, actualBytes, names, title) {
-  report = result; filter = 'all'; page = 0;
+  report = result; filter = result.entries.some(entry => entry.status !== 'matched') ? 'issues' : 'all'; page = 0;
   for (const [id,key] of Object.entries({expected:'expected_net',actual:'actual_net',delta:'delta',under:'underpayment',over:'overpayment'})) {
     $(id).textContent = E.formatMoney(report.totals[key]);
   }
   $('operation-count').textContent = report.entries.length + ' операций';
   const issues = report.counts.mismatch + report.counts.missing + report.counts.unexpected;
   $('input-status').textContent = `${title}. Проверено ${report.entries.length} операций, требуют внимания: ${issues}.`;
-  for (const button of document.querySelectorAll('[data-filter]')) button.setAttribute('aria-pressed',String(button.dataset.filter==='all'));
+  for (const button of document.querySelectorAll('[data-filter]')) button.setAttribute('aria-pressed',String(button.dataset.filter===filter));
   downloadable('download-report',JSON.stringify(report,null,2)+'\n','application/json;charset=utf-8','reconciliation-report.json');
   downloadable('download-csv',E.toCSV(report),'text/csv;charset=utf-8','reconciliation-report.csv');
   downloadable('download-expected',expectedBytes,'text/csv;charset=utf-8',names.expected);

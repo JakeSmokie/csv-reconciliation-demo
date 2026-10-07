@@ -28,18 +28,21 @@
     </nav>
     <main class="workspace">
       <section class="intro" aria-labelledby="page-title">
-        <div class="intro-copy"><p class="eyebrow">CSV · ОПЕРАЦИИ · ВЫПЛАТЫ</p><h1 id="page-title">Сверка без потерянных строк</h1><p class="lead">Сравните две выгрузки. Найдите расхождения и проверьте каждую сумму по исходной строке.</p></div>
-        <div class="demo-note"><span class="note-dot" aria-hidden="true"></span><span><strong>Можно проверить сразу</strong><br>Выберите пример или загрузите свои CSV.</span></div>
+        <h1 id="page-title">Сверка выгрузок</h1>
+        <p class="lead">Сравните операции и выплаты. Проверьте расхождения по исходным строкам.</p>
       </section>
       <noscript><div class="no-script">Для сверки и фильтров нужен JavaScript. В сохранённом Python-примере на четыре операции ожидается 1 500,00 ₽, выплачено 1 405,00 ₽, разница −95,00 ₽. <a href="report.json">Открыть готовый отчёт</a>.</div></noscript>
       <mdui-card variant="outlined" class="input-workbench" aria-labelledby="workbench-title">
-        <div class="workbench-heading"><div><p class="card-kicker">НАЧНИТЕ ЗДЕСЬ</p><h2 id="workbench-title">Выберите данные для сверки</h2></div><span class="local-processing">Файлы обрабатываются в браузере</span></div>
-        <div class="workbench-controls">
-          <div class="field scenario-field"><label for="scenario">Готовый пример</label><select id="scenario"><option value="business">Операции и выплаты</option><option value="cancellation">Возврат и корректировка</option><option value="duplicate">Проверка повторного ID</option></select></div>
-          <div class="field"><label for="expected-file">Ваши ожидаемые операции</label><input type="file" id="expected-file" accept=".csv,text/csv"></div>
-          <div class="field"><label for="actual-file">Ваши выплаты</label><input type="file" id="actual-file" accept=".csv,text/csv"></div>
-        </div>
-        <div class="workbench-actions"><mdui-button variant="filled" id="run-reconciliation">Сверить файлы</mdui-button><p id="input-status" role="status" aria-live="polite">Показан пример на искусственных данных.</p></div>
+        <div class="field scenario-field"><label id="workbench-title" for="scenario">Готовый пример</label><select id="scenario"><option value="business">Операции и выплаты</option><option value="cancellation">Возврат и корректировка</option><option value="duplicate">Проверка повторного ID</option></select></div>
+        <details class="upload-details">
+          <summary>Сверить свои CSV</summary>
+          <div class="workbench-controls">
+            <div class="field"><label for="expected-file">Ожидаемые операции</label><input type="file" id="expected-file" accept=".csv,text/csv"></div>
+            <div class="field"><label for="actual-file">Выплаты</label><input type="file" id="actual-file" accept=".csv,text/csv"></div>
+          </div>
+          <div class="workbench-actions"><mdui-button variant="filled" id="run-reconciliation">Сверить файлы</mdui-button><p class="local-processing">Файлы обрабатываются в браузере</p></div>
+        </details>
+        <p id="input-status" class="input-status" role="status" aria-live="polite">Показан пример на искусственных данных.</p>
         <div id="input-error" class="input-error" role="alert" hidden></div>
         <details class="format-details"><summary>Какой формат CSV нужен</summary><div class="format-columns"><div><strong>Ожидаемые операции</strong><pre>id,gross,commission,refund
 T001,1000.00,100.00,0.00</pre></div><div><strong>Выплаты</strong><pre>id,actual_net
@@ -56,7 +59,7 @@ T001,900.00</pre></div></div><p>UTF-8, разделитель — запятая
           <div class="explanation"><p><strong>Общий итог не скрывает отдельные ошибки.</strong> Отклонения вниз: <b id="under">—</b>, вверх: <b id="over">—</b>.</p></div>
         </section>
         <mdui-card variant="filled" class="report" aria-labelledby="report-title">
-          <div class="report-heading"><div><h2 id="report-title">Операции</h2><p>Проверьте все строки или оставьте только расхождения.</p></div><div class="download-actions"><mdui-button variant="outlined" id="download-report" href="report.json" download="report.json">Скачать JSON <span aria-hidden="true">↓</span></mdui-button><mdui-button variant="outlined" id="download-csv" href="#" download="report.csv">Скачать CSV <span aria-hidden="true">↓</span></mdui-button></div></div>
+          <div class="report-heading"><div><h2 id="report-title">Операции</h2><p>Проверьте все строки или оставьте только расхождения.</p></div><div class="download-actions"><mdui-button variant="tonal" id="download-report" href="report.json" download="report.json">Скачать JSON <span aria-hidden="true">↓</span></mdui-button><mdui-button variant="tonal" id="download-csv" href="#" download="report.csv">Скачать CSV <span aria-hidden="true">↓</span></mdui-button></div></div>
           <div class="filters" role="group" aria-label="Фильтр строк">
             <mdui-button variant="tonal" data-filter="all" aria-pressed="true">Все строки</mdui-button>
             <mdui-button variant="tonal" data-filter="issues" aria-pressed="false">Только проблемы</mdui-button>
