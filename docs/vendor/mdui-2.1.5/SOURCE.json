@@ -1,0 +1,34 @@
+{
+  "name": "mdui",
+  "version": "2.1.5",
+  "registry_url": "https://registry.npmjs.org/mdui/2.1.5",
+  "tarball_url": "https://registry.npmjs.org/mdui/-/mdui-2.1.5.tgz",
+  "integrity": "sha512-uvXy/IFu/K93lAswsbKNj2Dn7Aab0LjWgdnfyIM/RQL0BhDe6Y9ChbN0x/Ts1W03nJtcef3wb1Fp44q8L9zmiQ==",
+  "archive_sha256": "b3997204860ffe772a68fba309ee24b669082a2f735e28a79edac91a736e9130",
+  "license": "MIT",
+  "retrieved_on": "2026-10-07",
+  "files": {
+    "LICENSE": {
+      "bytes": 1093,
+      "sha256": "a0f97626c2fd0dbe659289693571b527c0b2363981478911babc38cc9b28c62e"
+    },
+    "mdui.css": {
+      "bytes": 22776,
+      "sha256": "6ec44497a312b98164ba82fdbc445268f68e44147cb3a7730d53ac83e1ce20d6"
+    },
+    "mdui.global.js": {
+      "bytes": 362818,
+      "sha256": "3c7d103eedf6ba0f2ff8304258d2becd66cbb3a2bafc5f41a2004ac0e5801fef"
+    },
+    "package.json": {
+      "bytes": 1526,
+      "sha256": "739c0988859e729e41559f85c98f5d5b4d9f11ffe88d0f435dcad339c9f3a3c3"
+    },
+    "README.md": {
+      "bytes": 2469,
+      "sha256": "48fd4c452ee212b32072f0ebf9d6d0aba3b122fc21db7aaa856d2858cdcd7ead"
+    }
+  },
+  "standalone_bundle": "mdui.global.js",
+  "stylesheet": "mdui.css"
+}

@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "money_unit": "RUB",
+  "delta_definition": "actual - expected",
+  "inputs": {
+    "expected": {
+      "path": "examples/expected.csv",
+      "sha256": "48f0098429cd40e977d0556034e8cba863ba575e3fa86eb37a6428d4d74bc0c9",
+      "rows": 3
+    },
+    "actual": {
+      "path": "examples/actual.csv",
+      "sha256": "f86a8e9d0d5160814fe3ec84036660456f7da70166835bf8431f013dd2308a47",
+      "rows": 3
+    }
+  },
+  "counts": {
+    "matched": 1,
+    "mismatch": 1,
+    "missing": 1,
+    "unexpected": 1
+  },
+  "totals": {
+    "gross": "1700.00",
+    "commission": "170.00",
+    "refund": "30.00",
+    "expected_net": "1500.00",
+    "actual_net": "1405.00",
+    "delta": "-95.00",
+    "underpayment": "170.00",
+    "overpayment": "75.00"
+  },
+  "conservation_verified": true,
+  "entries": [
+    {
+      "id": "T001",
+      "status": "matched",
+      "expected_net": "900.00",
+      "actual_net": "900.00",
+      "delta": "0.00",
+      "expected_source": {
+        "path": "examples/expected.csv",
+        "line_start": 2,
+        "line_end": 2,
+        "values": {
+          "id": "T001",
+          "gross": "1000.00",
+          "commission": "100.00",
+          "refund": "0.00"
+        }
+      },
+      "actual_source": {
+        "path": "examples/actual.csv",
+        "line_start": 2,
+        "line_end": 2,
+        "values": {
+          "id": "T001",
+          "actual_net": "900.00"
+        }
+      }
+    },
+    {
+      "id": "T002",
+      "status": "mismatch",
+      "expected_net": "450.00",
+      "actual_net": "430.00",
+      "delta": "-20.00",
+      "expected_source": {
+        "path": "examples/expected.csv",
+        "line_start": 3,
+        "line_end": 3,
+        "values": {
+          "id": "T002",
+          "gross": "500.00",
+          "commission": "50.00",
+          "refund": "0.00"
+        }
+      },
+      "actual_source": {
+        "path": "examples/actual.csv",
+        "line_start": 3,
+        "line_end": 3,
+        "values": {
+          "id": "T002",
+          "actual_net": "430.00"
+        }
+      }
+    },
+    {
+      "id": "T003",
+      "status": "missing",
+      "expected_net": "150.00",
+      "actual_net": "0.00",
+      "delta": "-150.00",
+      "expected_source": {
+        "path": "examples/expected.csv",
+        "line_start": 4,
+        "line_end": 4,
+        "values": {
+          "id": "T003",
+          "gross": "200.00",
+          "commission": "20.00",
+          "refund": "30.00"
+        }
+      },
+      "actual_source": null
+    },
+    {
+      "id": "T004",
+      "status": "unexpected",
+      "expected_net": "0.00",
+      "actual_net": "75.00",
+      "delta": "75.00",
+      "expected_source": null,
+      "actual_source": {
+        "path": "examples/actual.csv",
+        "line_start": 4,
+        "line_end": 4,
+        "values": {
+          "id": "T004",
+          "actual_net": "75.00"
+        }
+      }
+    }
+  ]
+}

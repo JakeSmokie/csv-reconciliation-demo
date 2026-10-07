@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ru" class="mdui-theme-light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f8fafd">
+  <meta name="description" content="Сверка двух CSV: точные суммы, понятные расхождения и исходные строки. Демонстрационный проект Ивана на искусственных данных.">
+  <title>Сверка выгрузок · Иван</title>
+  <link rel="stylesheet" href="vendor/mdui-2.1.5/mdui.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="vendor/mdui-2.1.5/mdui.global.js"></script>
+  <script>mdui.setColorScheme('#1967d2');</script>
+</head>
+<body>
+  <a class="skip-link" href="#report-title">Перейти к результатам</a>
+  <header class="app-header">
+    <a class="brand" href="#" aria-label="Иван — сверка выгрузок"><span class="avatar" aria-hidden="true">И</span><span><strong>Иван</strong><span class="brand-caption">Python и данные</span></span></a>
+    <div class="header-actions"><span class="project-label">Демонстрационный проект</span><mdui-button variant="text" href="https://github.com/JakeSmokie/csv-reconciliation-demo">Открыть GitHub <span aria-hidden="true">↗</span></mdui-button></div>
+  </header>
+  <div class="app-layout">
+    <nav class="side-nav" aria-label="Разделы проекта">
+      <p class="nav-title">Сверка выгрузок</p>
+      <a class="nav-item current" href="#report-title" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4zM4 9h16M9 4v16"/></svg>Результат</a>
+      <a class="nav-item" href="#verify-title"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6zM14 3v5h4M9 12h6M9 16h6"/></svg>Исходные файлы</a>
+      <a class="nav-item" href="https://github.com/JakeSmokie/csv-reconciliation-demo/actions"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 7-5 5 5 5m8-10 5 5-5 5m-3-12-2 14"/></svg>Код и проверки</a>
+      <div class="nav-note">Две таблицы.<br>Проверяемый результат.</div>
+    </nav>
+    <main class="workspace">
+      <section class="intro" aria-labelledby="page-title">
+        <div class="intro-copy"><p class="eyebrow">ОПЕРАЦИИ И ВЫПЛАТЫ</p><h1 id="page-title">Сверка без потерянных строк</h1><p class="lead">Сделал инструмент, который сравнивает две выгрузки и показывает, откуда взялось каждое расхождение.</p></div>
+        <div class="demo-note"><span class="note-dot" aria-hidden="true"></span><span><strong>Демонстрационные данные</strong><br>Все операции и суммы в примере искусственные.</span></div>
+      </section>
+      <noscript><div class="no-script">Для фильтров нужен JavaScript. В примере ожидается 1 500,00 ₽, выплачено 1 405,00 ₽, разница −95,00 ₽. <a href="report.json">Открыть готовый отчёт</a>.</div></noscript>
+      <section class="summary" aria-labelledby="summary-title">
+        <div class="section-heading"><h2 id="summary-title">Результат сверки</h2><span class="subtle-label">4 операции · RUB</span></div>
+        <div class="metrics">
+          <mdui-card variant="outlined" class="metric"><p>Ожидается</p><strong id="expected">—</strong><span>После комиссии и возврата</span></mdui-card>
+          <mdui-card variant="outlined" class="metric"><p>В выгрузке выплат</p><strong id="actual">—</strong><span>Сумма фактических записей</span></mdui-card>
+          <mdui-card variant="filled" class="metric delta"><p>Общая разница</p><strong id="delta">—</strong><span>Выплаты минус ожидание</span></mdui-card>
+        </div>
+        <div class="explanation"><span class="info-mark" aria-hidden="true">i</span><p><strong>Разнонаправленные ошибки показаны отдельно.</strong> Отклонения вниз: <b id="under">—</b>, вверх: <b id="over">—</b>. Общий итог не заменяет проверку каждой строки.</p></div>
+      </section>
+      <mdui-card variant="filled" class="report" aria-labelledby="report-title">
+        <div class="report-heading"><div><h2 id="report-title">Операции</h2><p>Посмотрите все строки или только те, где есть расхождение.</p></div><mdui-button variant="outlined" href="report.json" download="report.json">Скачать JSON <span aria-hidden="true">↓</span></mdui-button></div>
+        <div class="filters" role="group" aria-label="Фильтр строк">
+          <mdui-button variant="tonal" data-filter="all" aria-pressed="true">Все строки</mdui-button>
+          <mdui-button variant="tonal" data-filter="issues" aria-pressed="false">Только проблемы</mdui-button>
+          <mdui-button variant="tonal" data-filter="missing" aria-pressed="false">Нет выплаты</mdui-button>
+          <mdui-button variant="tonal" data-filter="unexpected" aria-pressed="false">Неожиданная выплата</mdui-button>
+        </div>
+        <div class="table-scroll" tabindex="0" role="region" aria-label="Таблица результатов сверки">
+          <table><thead><tr><th scope="col">Операция</th><th scope="col">Результат</th><th scope="col">Ожидается</th><th scope="col">Выплачено</th><th scope="col">Разница</th><th scope="col">Проверка</th></tr></thead><tbody id="rows"></tbody></table>
+        </div>
+        <div class="table-footer"><p id="count" aria-live="polite"></p><span>«Исходные строки» покажут происхождение суммы.</span></div>
+        <div id="source-panel" class="source-panel" hidden tabindex="-1" role="region" aria-labelledby="source-title"><div class="source-heading"><h3 id="source-title"></h3><mdui-button variant="text" id="close-source">Закрыть</mdui-button></div><pre id="source-values"></pre></div>
+      </mdui-card>
+      <section class="details" aria-label="Проверка и свойства инструмента">
+        <mdui-card variant="outlined" class="detail-card"><p class="card-kicker">ВОСПРОИЗВОДИМОСТЬ</p><h2 id="verify-title">Проверьте на своих файлах</h2><ol><li>Скачайте <a href="expected.csv" download>операции</a> и <a href="actual.csv" download>выплаты</a> из примера.</li><li>Запустите скрипт по инструкции в <a href="https://github.com/JakeSmokie/csv-reconciliation-demo#readme">репозитории</a>.</li><li>Сравните отчёт: суммы, статусы и SHA-256 входных файлов.</li></ol></mdui-card>
+        <mdui-card variant="outlined" class="detail-card"><p class="card-kicker">КОНТРОЛЬ КАЧЕСТВА</p><h2>Что предусмотрел</h2><ul><li>Расчёт в копейках через Decimal.</li><li>Проверку дубликатов и формата значений.</li><li>Исходные строки для каждой цифры.</li><li>Тесты ошибок и крайних случаев.</li></ul><a class="text-action" href="https://github.com/JakeSmokie/csv-reconciliation-demo/actions">Посмотреть проверки <span aria-hidden="true">↗</span></a></mdui-card>
+      </section>
+      <footer><p>Демо рассчитано на явно заданный формат CSV. Для другой выгрузки отдельно согласуем ключ сопоставления, формулу и правила обработки.</p><span>Иван · Python и данные</span></footer>
+    </main>
+  </div>
+  <script src="demo-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
