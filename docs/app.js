@@ -41,7 +41,8 @@ function source(entry, button) {
   if (sourceButton) sourceButton.setAttribute('aria-expanded','false');
   sourceButton = button;
   button.setAttribute('aria-expanded','true');
-  $('source-title').textContent = 'Исходные строки: ' + entry.id;
+  $('source-title').textContent = 'Исходные строки';
+  $('source-id').textContent = entry.id;
   let explanation = $('source-explanation');
   if (!explanation) {
     explanation = document.createElement('p');

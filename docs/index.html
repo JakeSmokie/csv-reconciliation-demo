@@ -69,11 +69,15 @@ T001,900.00</pre></div></div><p>UTF-8, разделитель — запятая
           </div>
           <div class="table-scroll" tabindex="0" role="region" aria-label="Таблица результатов сверки"><table role="table"><thead role="rowgroup"><tr role="row"><th scope="col" role="columnheader">Операция</th><th scope="col" role="columnheader">Результат</th><th scope="col" role="columnheader">Ожидается</th><th scope="col" role="columnheader">Выплачено</th><th scope="col" role="columnheader">Разница</th><th scope="col" role="columnheader">Проверка</th></tr></thead><tbody id="rows" role="rowgroup"></tbody></table></div>
           <div class="table-footer"><p id="count" aria-live="polite"></p><span>Каждая сумма связана с исходными строками.</span></div>
-          <div id="source-panel" class="source-panel" hidden tabindex="-1" role="region" aria-labelledby="source-title"><div class="source-heading"><h3 id="source-title"></h3><mdui-button variant="text" id="close-source">Закрыть</mdui-button></div><pre id="source-values"></pre></div>
+          <div id="source-panel" class="source-panel" hidden tabindex="-1" role="region" aria-labelledby="source-title" aria-describedby="source-identity">
+            <div class="source-heading"><h3 id="source-title">Исходные строки</h3><mdui-button variant="text" id="close-source">Закрыть</mdui-button></div>
+            <div id="source-identity" class="source-identity"><span class="source-id-label">Операция</span><code id="source-id"></code></div>
+            <pre id="source-values"></pre>
+          </div>
         </mdui-card>
       </div>
       <section class="details" aria-label="Проверка и свойства инструмента">
-        <mdui-card variant="outlined" class="detail-card"><p class="card-kicker">ВОСПРОИЗВОДИМОСТЬ</p><h2 id="verify-title">От файла до исходной строки</h2><ol><li>Скачайте <a id="download-expected" href="expected.csv" download>операции</a> и <a id="download-actual" href="actual.csv" download>выплаты</a> текущей сверки.</li><li>Запустите Python-скрипт по инструкции в <a href="https://github.com/JakeSmokie/csv-reconciliation-demo#readme">репозитории</a>.</li><li>Сравните суммы, статусы и SHA-256 исходных файлов.</li></ol></mdui-card>
+        <mdui-card variant="outlined" class="detail-card"><p class="card-kicker">ВОСПРОИЗВОДИМОСТЬ</p><h2 id="verify-title">От файла до исходной строки</h2><ol><li>После успешной сверки скачайте исходные <a id="download-expected" href="expected.csv" download>операции</a> и <a id="download-actual" href="actual.csv" download>выплаты</a>.</li><li>Запустите Python-скрипт по инструкции в <a href="https://github.com/JakeSmokie/csv-reconciliation-demo#readme">репозитории</a>.</li><li>Сравните суммы, статусы и SHA-256 исходных файлов.</li></ol></mdui-card>
         <mdui-card variant="outlined" class="detail-card"><p class="card-kicker">ПРОВЕРКИ</p><h2>Мелочи, которые влияют на результат</h2><ul><li>Точный расчёт денежных сумм.</li><li>Проверка дубликатов и формата значений.</li><li>Исходные строки для каждого расхождения.</li><li>Тесты ошибок и крайних случаев.</li></ul><a class="text-action" href="https://github.com/JakeSmokie/csv-reconciliation-demo/actions">Посмотреть проверки <span aria-hidden="true">↗</span></a></mdui-card>
       </section>
       <footer><p>Для другой выгрузки отдельно согласуем ключ сопоставления, формулу и правила обработки. Готовые примеры используют искусственные данные.</p><span>Иван · Python и данные</span></footer>
